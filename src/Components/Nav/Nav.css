@@ -1,0 +1,66 @@
+.nav-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.logo h2 {
+    font-size: 3rem;
+}
+
+.logo img {
+    height: 3rem;
+    border-radius: 10px;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+}
+
+.links h3 {
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.login-signup-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-signup-buttons .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.login-signup-buttons .buttons button {
+    padding: .2rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: yellow;
+    color: black;
+}
+
+hr {
+    border: 1px solid white;
+    margin: 0 1rem;
+}
