@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useState } from "react";
 
 const Protected = () => {
     let auth = false

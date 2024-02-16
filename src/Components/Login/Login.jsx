@@ -55,6 +55,7 @@ const Login = () => {
                     secure: true,
                     httpOnly: false
                 })
+                navigate('/dashboard')
             }
         } catch (error) {
             console.error(error)
