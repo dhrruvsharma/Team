@@ -5,20 +5,19 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useLoadContext } from "../../Context/LoadContext";
 import Loader from "../Loader/Loader";
-import { useState } from "react";
 import { useErrorContext } from "../../Context/ErrorContext";
 import { useActiveContext } from "../../Context/ActiveContext";
 import { useAddBoard } from "../../Context/AddBoard";
 
 const SideBar = () => {
     const { boards } = useBoardContext()
-    const {setPop,setError} = useErrorContext()
+    const { setPop, setError } = useErrorContext()
     const { setToLoad } = useLoadContext()
-    const {setActive} = useActiveContext()
-    const {boardName} = useAddBoard()
-    const {AddApi,setAddApi} = useAddBoard()
-    const {setShowBoard} = useAddBoard()
-    const {LoadSide,setLoadSide} = useLoadContext()
+    const { setActive } = useActiveContext()
+    const { boardName } = useAddBoard()
+    const { AddApi, setAddApi } = useAddBoard()
+    const { setShowBoard } = useAddBoard()
+    const { LoadSide, setLoadSide } = useLoadContext()
 
     const token = Cookies.get("token")
     const AddBoard = async () => {
@@ -54,7 +53,7 @@ const SideBar = () => {
         if (AddApi && boardName) {
             AddBoard()
         }
-    },[AddApi])
+    }, [AddApi])
 
     const HandleClick = () => {
         setShowBoard(true)
@@ -66,8 +65,11 @@ const SideBar = () => {
                 <div className="boards-container">
                     <h3>Your Boards <span className="add" onClick={HandleClick}>+</span></h3>
                     {boards.map((item) => (
-                        <div className="board-container" key={item.boardID} onClick={()=>setActive(item.boardID)}>
-                            <p>{item.boardName}</p>
+                        <div className="board-container" key={item.boardID} onClick={() => setActive(item.boardID)}>
+                            <div className="board-main">
+                                <p>{item.boardName}</p>
+                                <i className="fa fa-trash" onClick={() => {console.log(item.boardID) }} />
+                            </div>
                         </div>
                     ))}
                 </div>

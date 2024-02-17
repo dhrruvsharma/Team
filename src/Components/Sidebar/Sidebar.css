@@ -33,3 +33,14 @@
     align-items: center;
     gap: .5vw;
 }
+
+.sidebar .board-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar .board-main i {
+    z-index: 2;
+}

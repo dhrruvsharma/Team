@@ -14,6 +14,8 @@ import { useActiveContext } from "../../Context/ActiveContext";
 import JSONbig from "json-bigint"
 import BoardPopUp from "../BoardPopUp/BoardPop";
 import { useAddBoard } from "../../Context/AddBoard";
+import ListPop from "../List/ListPop";
+import { useAddList } from "../../Context/AddList";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
@@ -27,6 +29,7 @@ const Dashboard = () => {
     const { Active } = useActiveContext()
     const { setAddApi } = useAddBoard()
     const { setLoadSide } = useLoadContext()
+    const { showListPop } = useAddList()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -77,7 +80,6 @@ const Dashboard = () => {
                     }
                 )
             ))
-            console.log(extracted)
             setBoards(extracted)
         }
     }, [board])
@@ -95,13 +97,20 @@ const Dashboard = () => {
                     <SideBar />
                 </div>
                 <div className="dash-main">
+                    {showBoardPop && (
+                        <div className="board-pop">
+                            <BoardPopUp />
+                        </div>
+                    )}
                     {Active && (
                         <div className="dash-lists">
                             <Lists />
+                            <div className="list-pop">
+                                {showListPop && (
+                                    <ListPop />
+                                )}
+                            </div>
                         </div>
-                    )}
-                    {showBoardPop && (
-                        <BoardPopUp />
                     )}
                 </div>
             </div>

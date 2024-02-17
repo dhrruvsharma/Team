@@ -13,6 +13,7 @@ import { ErrorProvider } from './Context/ErrorContext'
 import { ActiveProvider } from './Context/ActiveContext'
 import { ListProvider } from './Context/ListContext'
 import { AddBoardProvider } from './Context/AddBoard'
+import { AddListProvider } from './Context/AddList'
 
 function App() {
 
@@ -32,7 +33,9 @@ function App() {
                     <ErrorProvider>
                       <AddBoardProvider>
                         <ListProvider>
-                          <Dashboard />
+                          <AddListProvider>
+                            <Dashboard />
+                          </AddListProvider>
                         </ListProvider>
                       </AddBoardProvider>
                     </ErrorProvider>

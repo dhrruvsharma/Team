@@ -8,25 +8,36 @@
 }
 
 .lists-container {
-    display: flex;
-    flex-direction: row;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
     gap: 2rem;
     height: 100%;
 }
 
 .list {
-    background-color: black;
+    background-color: rgb(33, 32, 32);
     border-radius: 10px;
-    margin-top: 1rem;
+    flex: 1;
+    height: 100%;
 }
 
 .list-container {
     display: flex;
-    flex-direction: column;
-    background-color: black;
-    color: white;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: whitesmoke;
     padding: 0 2rem;
     margin-top: 1rem;
+}
+
+.loading {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
 }
 
 .list-container hr {
@@ -36,9 +47,64 @@
 .lists button {
     padding: .5rem;
     border-radius: 10px;
-    background-color: whitesmoke;
-    color: black;
+    background-color: #ab6d8bff;
+    color: whitesmoke;
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
+}
+
+.lists button:hover {
+    background-color: rgb(144, 96, 120);
+}
+
+.listpop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 60vw;
+}
+
+.list-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    padding: 3rem;
+    color: black;
+    border-radius: 10px;
+}
+
+.list-add input {
+    border: none;
+    font-size: 1.3rem;
+    margin: 1vw 0;
+    border-radius: 10px;
+    padding: 0.3rem;
+}
+
+.list-add label {
+    font-size: 1.2rem;
+}
+
+.list-add .buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-add button {
+    padding: .3vw;
+    font-size: 1rem;
+    background-color: green;
+    color: white;
+}
+
+.tasks-container {
+    text-align: center;
+    margin-top: .5rem;
 }
