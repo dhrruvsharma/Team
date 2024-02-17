@@ -1,0 +1,31 @@
+.dashboard {
+    display: grid;
+    grid-template-areas:
+        "nav"
+        "dashboard"
+    ;
+    height: 100%;
+    grid-template-rows: 8%;
+}
+
+.dashboard-container {
+    grid-area: dashboard;
+    display: grid;
+    grid-template-areas:
+        "sidebar dash dash dash"
+    ;
+    height: 100%;
+    grid-template-columns: 11%;
+}
+
+.dash-navbar {
+    grid-area: nav;
+}
+
+.sidebar-container {
+    grid-area: sidebar;
+}
+
+.dash-main {
+    grid-area: dash;
+}

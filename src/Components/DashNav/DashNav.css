@@ -1,0 +1,13 @@
+.dash-nav {
+    display: flex;
+    flex-direction: row;
+    padding: .5rem;
+}
+
+.logout button {
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    padding: 0.3vw;
+}
