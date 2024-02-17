@@ -5,26 +5,45 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useBoardContext } from "../../Context/BoardContext";
 import "./Dash.css"
-import Loader from "../Loader/Loader";
 import { useLoadContext } from "../../Context/LoadContext";
 import { useErrorContext } from "../../Context/ErrorContext";
 import Error from "../ErrorPopup/Error";
 import DashNav from "../DashNav/Dashnav";
+import Lists from "../List/Lists";
+import { useActiveContext } from "../../Context/ActiveContext";
+import JSONbig from "json-bigint"
+import BoardPopUp from "../BoardPopUp/BoardPop";
+import { useAddBoard } from "../../Context/AddBoard";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
+    const { showBoardPop } = useAddBoard()
     const [board, setBoard] = useState([])
-    const [load, setLoad] = useState(false)
     const { setBoards } = useBoardContext()
     const { toLoad } = useLoadContext()
     const { setToLoad } = useLoadContext()
     const { pop } = useErrorContext()
+    const { Active } = useActiveContext()
+    const { setAddApi } = useAddBoard()
+    const { setLoadSide } = useLoadContext()
+
+    const axiosInstance = axios.create({
+        transformResponse: [
+            function (data) {
+                try {
+                    return JSONbig.parse(data)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        ]
+    })
 
     const getBoards = async () => {
-        setLoad(true)
+        setLoadSide(false)
         try {
-            const response = await axios.get(`${url}api/user/boards/get`, {
+            const response = await axiosInstance.get(`${url}api/user/boards/get`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -33,8 +52,9 @@ const Dashboard = () => {
         } catch (error) {
             console.error(error)
         }
-        setLoad(false)
+        setLoadSide(true)
         setToLoad(false)
+        setAddApi(false)
     }
 
     useEffect(() => {
@@ -48,18 +68,19 @@ const Dashboard = () => {
     }, [])
 
     useEffect(() => {
-        const extractedBoards = board.map((item) => {
-            return (
-                {
-                    boardID: item.boardID,
-                    boardName: item.boardName
-                }
-            )
-        })
-        setBoards(extractedBoards)
+        if (board) {
+            const extracted = board.map((item) => (
+                (
+                    {
+                        boardID: BigInt(item.boardID.c.join("")),
+                        boardName: item.boardName
+                    }
+                )
+            ))
+            console.log(extracted)
+            setBoards(extracted)
+        }
     }, [board])
-
-
 
     return (
         <div className="dashboard">
@@ -69,16 +90,21 @@ const Dashboard = () => {
             {pop && (
                 <Error />
             )}
-            {!load ? (
-                <div className="dashboard-container">
-                    <div className="sidebar-container">
-                        <SideBar />
-                    </div>
-                    <div className="dash-main">
-                        This is the dashboard
-                    </div>
+            <div className="dashboard-container">
+                <div className="sidebar-container">
+                    <SideBar />
                 </div>
-            ) : <Loader />}
+                <div className="dash-main">
+                    {Active && (
+                        <div className="dash-lists">
+                            <Lists />
+                        </div>
+                    )}
+                    {showBoardPop && (
+                        <BoardPopUp />
+                    )}
+                </div>
+            </div>
         </div>
     )
 }

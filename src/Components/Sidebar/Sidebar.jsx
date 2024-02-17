@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useBoardContext } from "../../Context/BoardContext";
 import "./Sidebar.css"
 import Cookies from "js-cookie";
@@ -7,22 +7,26 @@ import { useLoadContext } from "../../Context/LoadContext";
 import Loader from "../Loader/Loader";
 import { useState } from "react";
 import { useErrorContext } from "../../Context/ErrorContext";
+import { useActiveContext } from "../../Context/ActiveContext";
+import { useAddBoard } from "../../Context/AddBoard";
 
 const SideBar = () => {
     const { boards } = useBoardContext()
     const {setPop,setError} = useErrorContext()
     const { setToLoad } = useLoadContext()
-
-    const [load, setLoad] = useState(false)
+    const {setActive} = useActiveContext()
+    const {boardName} = useAddBoard()
+    const {AddApi,setAddApi} = useAddBoard()
+    const {setShowBoard} = useAddBoard()
+    const {LoadSide,setLoadSide} = useLoadContext()
 
     const token = Cookies.get("token")
-    console.log(boards)
     const AddBoard = async () => {
-        setLoad(true)
+        setLoadSide(false)
         const url = import.meta.env.VITE_REACT_APP_SIGNUP
         try {
             const response = await axios.post(`${url}api/user/board/create`, {
-                "boardName": "Again",
+                "boardName": boardName,
             },
                 {
                     headers: {
@@ -30,7 +34,6 @@ const SideBar = () => {
                     }
                 }
             )
-            console.log(response.data)
             if (response.data.status === true) {
                 setToLoad(true)
             }
@@ -43,17 +46,27 @@ const SideBar = () => {
             setPop(true)
             setError("Error adding the board")
         }
-        setLoad(false)
+        setLoadSide(true)
+        setAddApi(false)
     }
 
+    useEffect(() => {
+        if (AddApi && boardName) {
+            AddBoard()
+        }
+    },[AddApi])
+
+    const HandleClick = () => {
+        setShowBoard(true)
+    }
 
     return (
         <div className="sidebar">
-            {!load ? (
+            {LoadSide ? (
                 <div className="boards-container">
-                    <h3>Your Boards <span className="add" onClick={AddBoard}>+</span></h3>
+                    <h3>Your Boards <span className="add" onClick={HandleClick}>+</span></h3>
                     {boards.map((item) => (
-                        <div className="board-container" key={item.boardID}>
+                        <div className="board-container" key={item.boardID} onClick={()=>setActive(item.boardID)}>
                             <p>{item.boardName}</p>
                         </div>
                     ))}

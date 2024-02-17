@@ -6,13 +6,14 @@
     ;
     height: 100%;
     grid-template-rows: 8%;
+    align-items: center;
 }
 
 .dashboard-container {
     grid-area: dashboard;
     display: grid;
     grid-template-areas:
-        "sidebar dash dash dash"
+        "sidebar dash"
     ;
     height: 100%;
     grid-template-columns: 11%;
@@ -28,4 +29,10 @@
 
 .dash-main {
     grid-area: dash;
+    background-color: rgb(185, 86, 102);
+}
+
+.dash-lists {
+    display: flex;
+    flex-direction: row;
 }
