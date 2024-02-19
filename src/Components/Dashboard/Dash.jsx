@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import SideBar from "../Sidebar/Sidebar";
-import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useBoardContext } from "../../Context/BoardContext";
@@ -16,20 +15,23 @@ import BoardPopUp from "../BoardPopUp/BoardPop";
 import { useAddBoard } from "../../Context/AddBoard";
 import ListPop from "../List/ListPop";
 import { useAddList } from "../../Context/AddList";
+import DeleteBoard from "../BoardPopUp/Delete";
+import DeleteList from "../List/DeleteList";
+import { useListContext } from "../../Context/ListContext";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
     const { showBoardPop } = useAddBoard()
-    const [board, setBoard] = useState([])
-    const { setBoards } = useBoardContext()
+    const { setBoards, board, setBoard } = useBoardContext()
     const { toLoad } = useLoadContext()
     const { setToLoad } = useLoadContext()
     const { pop } = useErrorContext()
     const { Active } = useActiveContext()
-    const { setAddApi } = useAddBoard()
+    const { setAddApi, showBoardDelete } = useAddBoard()
     const { setLoadSide } = useLoadContext()
     const { showListPop } = useAddList()
+    const { DeleteListPop } = useListContext()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -82,6 +84,9 @@ const Dashboard = () => {
             ))
             setBoards(extracted)
         }
+        else {
+            setBoards([])
+        }
     }, [board])
 
     return (
@@ -97,6 +102,16 @@ const Dashboard = () => {
                     <SideBar />
                 </div>
                 <div className="dash-main">
+                    {DeleteListPop && (
+                        <div className="delete-list">
+                            <DeleteList />
+                        </div>
+                    )}
+                    {showBoardDelete && (
+                        <div className="delete-board">
+                            <DeleteBoard />
+                        </div>
+                    )}
                     {showBoardPop && (
                         <div className="board-pop">
                             <BoardPopUp />

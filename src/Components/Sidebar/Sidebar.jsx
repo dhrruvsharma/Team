@@ -12,12 +12,10 @@ import { useAddBoard } from "../../Context/AddBoard";
 const SideBar = () => {
     const { boards } = useBoardContext()
     const { setPop, setError } = useErrorContext()
-    const { setToLoad } = useLoadContext()
+    const { setToLoad, LoadSide, setLoadSide } = useLoadContext()
     const { setActive } = useActiveContext()
-    const { boardName } = useAddBoard()
-    const { AddApi, setAddApi } = useAddBoard()
+    const { boardName, AddApi, setAddApi, setBoardDelete, setDelete } = useAddBoard()
     const { setShowBoard } = useAddBoard()
-    const { LoadSide, setLoadSide } = useLoadContext()
 
     const token = Cookies.get("token")
     const AddBoard = async () => {
@@ -59,16 +57,21 @@ const SideBar = () => {
         setShowBoard(true)
     }
 
+    const HandleDelete = (id) => {
+        setDelete(id)
+        setBoardDelete(true)
+    }
+
     return (
         <div className="sidebar">
             {LoadSide ? (
                 <div className="boards-container">
                     <h3>Your Boards <span className="add" onClick={HandleClick}>+</span></h3>
                     {boards.map((item) => (
-                        <div className="board-container" key={item.boardID} onClick={() => setActive(item.boardID)}>
+                        <div className="board-container" key={item.boardID}>
                             <div className="board-main">
-                                <p>{item.boardName}</p>
-                                <i className="fa fa-trash" onClick={() => {console.log(item.boardID) }} />
+                                <p onClick={()=> setActive(item.boardID)} className="board">{item.boardName}</p>
+                                <i className="fa fa-trash" onClick={() => HandleDelete(item.boardID)} />
                             </div>
                         </div>
                     ))}

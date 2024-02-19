@@ -20,9 +20,10 @@
     margin-top: 0.5vw;
     border-radius: 10px;
     padding: .5vw;
+}
+.board {
     cursor: pointer;
 }
-
 .add {
     font-size: 1.5rem;
     cursor: pointer;

@@ -12,11 +12,11 @@ import { useAddList } from "../../Context/AddList";
 
 const Lists = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
-    const { Active } = useActiveContext()
+    const { Active, ActiveList, setActiveList } = useActiveContext()
     const token = Cookies.get('token')
     const { loadList, setLoadList } = useLoadContext()
     const [board, setBoard] = useState([])
-    const { lists, setLists } = useListContext()
+    const { lists, setLists, setDeleteListPop, DeleteListApi, setDeleteListApi, ExtractedLists, setExtractedLists } = useListContext()
     const { listName, setShowListPop, AddListApi, setAddList } = useAddList()
     const axiosInstance = axios.create({
         transformResponse: [
@@ -46,17 +46,22 @@ const Lists = () => {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            setBoard(response.data.board)
+            setLists(response.data.board.lists)
         } catch (error) {
             console.error(error)
         }
         setLoadList(true)
     }
 
+    const HandleDeleteList = (id) => {
+        setActiveList(id)
+        setDeleteListPop(true)
+    }
+
     const AddList = async () => {
         setLoadList(false)
         try {
-            await axiosInstance.post(`${url}api/user/board/list/add`, {
+            const response = await axiosInstance.post(`${url}api/user/board/list/add`, {
                 "boardID": Active.toString(),
                 "listName": listName,
             }, {
@@ -66,25 +71,32 @@ const Lists = () => {
                 }
             }
             )
+            setLists(response.data.board.lists)
         } catch (error) {
             console.error(error)
         }
         setLoadList(true)
         setAddList(false)
-        GetLists()
     }
 
     useEffect(() => {
-        if (board.lists) {
-            const extractedLists = board.lists.map((item) => (
-                {
-                    listID: BigInt(item.listID.c.join("")),
-                    listName: item.listName,
+        if (lists) {
+            const extractedLists = lists.map((item) => {
+                const paddedList = item.listID.c.map((num, index) => {
+                    if (index === 0) {
+                        return num.toString().padStart(4, '0')
+                    } else {
+                        return num.toString().padStart(14, '0')
+                    }
+                })
+                return {
+                    listID: paddedList.join(''),
+                    listName: item.listName
                 }
-            ))
-            setLists(extractedLists)
+            })
+            setExtractedLists(extractedLists)
         }
-    }, [board])
+    }, [lists])
 
     useEffect(() => {
         if (AddListApi && listName) {
@@ -92,15 +104,40 @@ const Lists = () => {
         }
     }, [AddListApi])
 
+    const DeleteList = async () => {
+        setLoadList(false)
+        try {
+            const response = await axiosInstance.delete(`${url}api/user/board/list/delete`, {
+                data: {
+                    "listID": ActiveList.toString()
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            setLists(response.data.board.lists)
+        } catch (error) {
+            console.error(error)
+        }
+        setLoadList(true)
+        setDeleteListApi(false)
+    }
+
+    useEffect(() => {
+        if (DeleteListApi && ActiveList) {
+            DeleteList()
+        }
+    }, [DeleteListApi])
+
     return (
         <div className="lists">
             {loadList ? (
                 <div className="lists-container">
-                    {lists.map((item) => (
+                    {ExtractedLists.map((item) => (
                         <div className="list" key={item.listID}>
-                            <div className="list-container">
+                            <div className="list-container" >
                                 <h1>{item.listName}</h1>
-                                <i className="fa fa-trash fa-2x" />
+                                <i className="fa fa-trash fa-2x" onClick={() => { HandleDeleteList(item.listID) }} />
                             </div>
                             <hr />
                             <div className="tasks-container">

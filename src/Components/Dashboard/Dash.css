@@ -52,3 +52,9 @@
     top: 0;
     left: 40vw;
 }
+
+.delete-list {
+    position: fixed;
+    left: 35vw;
+    top: 45vh;
+}
