@@ -6,9 +6,9 @@ import Cookies from "js-cookie";
 import "./Tasks.css"
 import { useListContext } from "../../Context/ListContext";
 
-const Tasks = ({ task }) => {
+const Tasks = ({ task, listID }) => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
-    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask, ShowDescription, setShowDescription } = useTaskContext()
+    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask } = useTaskContext()
     const { setLists } = useListContext()
     const [ExtractedTasks, setExtractedTasks] = useState([])
 
@@ -37,6 +37,7 @@ const Tasks = ({ task }) => {
                     }
                 })
                 const formattedDate = item.deadline.split('T')[0]
+                const finishedDate = item.deadline.split('T')[0]
                 return {
                     id: paddedTask.join(''),
                     headline: item.headline,
@@ -44,7 +45,9 @@ const Tasks = ({ task }) => {
                     priority: item.priority,
                     deadline: formattedDate,
                     completed: item.completed,
-                    show: false
+                    completedBy: item.completedBy,
+                    show: false,
+                    finished: finishedDate
                 }
             })
             setExtractedTasks(extractedTask)
@@ -91,6 +94,24 @@ const Tasks = ({ task }) => {
         });
     }
 
+    const MarkCompleted = async (id) => {
+        try {
+            const response = await axiosInstance.post(`${url}api/user/board/list/task/mark`, {
+                "taskID": id.toString(),
+                "listID": listID.toString(),
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (response.data.status === true) {
+                setLists(response.data.board.lists)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <div className="task-main">
             {task && (
@@ -105,11 +126,16 @@ const Tasks = ({ task }) => {
                                 <div className="details-container">
                                     <h2>Task Details</h2>
                                     <div className="desc">
-                                        <h3>Description:- {item.description}</h3>
-                                        <h3>Status:- {item.completed ? <>Finished</> : <>Not Completed</>}</h3>
-                                        <h3>Deadline:- {item.deadline}</h3>
-                                        <h3>Priority:- {item.priority}</h3>
-                                        <button onClick={() => { ToggleDetails(index) }}>Close</button>
+                                        <h3><span>Description:-</span> {item.description}</h3>
+                                        <h3><span>Status:-</span>{item.completed ? <>Finished</> : <>Not Completed</>}</h3>
+                                        <h3>
+                                            {item.completed ? <><span>Finished On :- &nbsp; </span>{item.finished}</> : <><span>Deadline:-</span> {item.deadline}</>}
+                                        </h3>
+                                        <h3><span>Priority:-</span> {item.priority}</h3>
+                                        <div className="buttons">
+                                            <button onClick={() => { ToggleDetails(index) }}>Close</button>
+                                            {item.completed ? <></> : <button onClick={() => { MarkCompleted(item.id) }}>Mark Completed</button>}
+                                        </div>
                                     </div>
                                 </div>
                             )}

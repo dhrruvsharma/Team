@@ -12,9 +12,8 @@ export const TaskProvider = ({ children }) => {
     const [Priority, setPriority] = useState("")
     const [AddTaskApi, setAddTask] = useState(false)
     const [AddTask, setAddTaskPop] = useState(false)
-    const [ShowDescription,setShowDescription] = useState(false)
     return (
-        <TaskContext.Provider value={{ TaskList, setTaskList, Headline, setHeadline, Description, setDescription, Deadline, setDeadline, Priority, setPriority, AddTaskApi, setAddTask, AddTask, setAddTaskPop, ShowDescription, setShowDescription }}>
+        <TaskContext.Provider value={{ TaskList, setTaskList, Headline, setHeadline, Description, setDescription, Deadline, setDeadline, Priority, setPriority, AddTaskApi, setAddTask, AddTask, setAddTaskPop}}>
             {children}
         </TaskContext.Provider>
     )

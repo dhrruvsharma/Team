@@ -150,7 +150,7 @@ const Lists = () => {
                             <hr />
                             <div className="tasks-container">
                                 <h2>Tasks <span onClick={() => { HandleAddTask(item.listID) }}>+</span></h2>
-                                <Tasks task={item.tasks} load={item.load} />
+                                <Tasks task={item.tasks} listID={item.listID} />
                             </div>
                         </div>
                     ))}

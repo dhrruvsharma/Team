@@ -31,12 +31,13 @@ const AddTaskPop = () => {
                 <form className="task-add" onSubmit={HandleSubmit}>
                     <label htmlFor="Headline">Enter Headline</label>
                     <input type="text" name="Headline" id="Headline" autoComplete="off" required onChange={HandleChange} />
-                    <label htmlFor="Description">Enter Description</label>
-                    <input type="text" name="Description" id="Description" autoComplete="off" required onChange={HandleChange} />
+
                     <label htmlFor="Deadline">Enter Deadline in Days</label>
                     <input type="number" name="Deadline" id="Deadline" autoComplete="off" required onChange={HandleChange} />
                     <label htmlFor="Priority">Enter Priority</label>
                     <input type="number" name="Priority" id="Priority" autoComplete="off" required onChange={HandleChange} />
+                    <label htmlFor="Description">Enter Description</label>
+                    <textarea name="Description" id="Description" cols="25" rows="6" required onChange={HandleChange} autoComplete="off"></textarea>
                     <div className="buttons">
                         <button type="submit">Add Task</button>
                         <button onClick={() => { setAddTaskPop(false) }}>Close</button>

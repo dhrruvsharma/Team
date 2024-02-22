@@ -14,7 +14,7 @@ const DeleteList = () => {
                 <h2>Are you sure you want to delete the List ?</h2>
                 <div className="buttons">
                     <button onClick={HandleClick}>Yes</button>
-                    <button>No</button>
+                    <button onClick={()=>{setDeleteListPop(false)}}>No</button>
                 </div>
             </div>
         </div>
