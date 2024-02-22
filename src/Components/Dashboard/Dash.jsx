@@ -20,6 +20,7 @@ import DeleteList from "../List/DeleteList";
 import { useListContext } from "../../Context/ListContext";
 import AddTaskPop from "../Taks/AddTaskPop"
 import { useTaskContext } from "../../Context/AddTask"
+import DeleteTask from "../Taks/DeleteTask";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
@@ -34,7 +35,7 @@ const Dashboard = () => {
     const { setLoadSide } = useLoadContext()
     const { showListPop } = useAddList()
     const { DeleteListPop } = useListContext()
-    const { AddTask, ShowDescription } = useTaskContext()
+    const { AddTask,DeleteTaskPop } = useTaskContext()
 
     const axiosInstance = axios.create({
         transformResponse: [

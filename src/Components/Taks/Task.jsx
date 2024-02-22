@@ -5,10 +5,12 @@ import JSONbig from 'json-bigint'
 import Cookies from "js-cookie";
 import "./Tasks.css"
 import { useListContext } from "../../Context/ListContext";
+import Loader from "../Loader/Loader"
+import DeleteTask from "./DeleteTask";
 
 const Tasks = ({ task, listID }) => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
-    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask } = useTaskContext()
+    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask, setDeleteTaskID, setDeleteList, setDeleteTaskPop, Load, setLoad,DeleteTaskPop } = useTaskContext()
     const { setLists } = useListContext()
     const [ExtractedTasks, setExtractedTasks] = useState([])
 
@@ -95,6 +97,7 @@ const Tasks = ({ task, listID }) => {
     }
 
     const MarkCompleted = async (id) => {
+        setLoad(false)
         try {
             const response = await axiosInstance.post(`${url}api/user/board/list/task/mark`, {
                 "taskID": id.toString(),
@@ -110,6 +113,13 @@ const Tasks = ({ task, listID }) => {
         } catch (error) {
             console.error(error)
         }
+        setLoad(true)
+    }
+
+    const HandleDeleteTask = (id) => {
+        setDeleteList(listID)
+        setDeleteTaskPop(true)
+        setDeleteTaskID(id)
     }
 
     return (
@@ -122,9 +132,11 @@ const Tasks = ({ task, listID }) => {
                             <div className="buttons">
                                 <button onClick={() => { ToggleDetails(index) }}>Details</button>
                             </div>
+                            
                             {item.show && (
+                                <>
                                 <div className="details-container">
-                                    <h2>Task Details</h2>
+                                    {Load ? <><h2>Task Details</h2>
                                     <div className="desc">
                                         <h3><span>Description:-</span> {item.description}</h3>
                                         <h3><span>Status:-</span>{item.completed ? <>Finished</> : <>Not Completed</>}</h3>
@@ -135,9 +147,16 @@ const Tasks = ({ task, listID }) => {
                                         <div className="buttons">
                                             <button onClick={() => { ToggleDetails(index) }}>Close</button>
                                             {item.completed ? <></> : <button onClick={() => { MarkCompleted(item.id) }}>Mark Completed</button>}
+                                            <button onClick={()=>{HandleDeleteTask(item.id)}}>Delete</button>
                                         </div>
-                                    </div>
+                                    </div></>: <Loader />}
                                 </div>
+                                {DeleteTaskPop && (
+                                    <div className="deletetask">
+                                        <DeleteTask />
+                                    </div>
+                                )}
+                                </>
                             )}
                         </div>
                     ))}

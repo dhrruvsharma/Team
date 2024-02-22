@@ -88,8 +88,11 @@
     flex-direction: column;
     padding: 3vw;
     position: fixed;
+    top: 40vh;
+    left: 30vw;
     background-color: beige;
     border-radius: 20px;
+    max-width: 30vw;
 }
 
 .desc {
@@ -126,4 +129,31 @@ textarea {
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
+    gap: 3vw;
+}
+
+.delete-task {
+    background-color: antiquewhite;
+    position: fixed;
+    top: 45vh;
+    left: 25vw;
+    z-index: 100;
+    font-size: 1.5rem;
+    padding: 3vw;
+    border-radius: 10px;
+}
+
+.delete-task .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 2vw;
+}
+
+.delete-task .buttons button {
+    padding: .4vw;
+    font-size: 1.2rem;
+    background-color: black;
+    color: white;
 }
