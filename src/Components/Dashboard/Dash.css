@@ -58,3 +58,9 @@
     left: 35vw;
     top: 45vh;
 }
+
+.addTask {
+    position: fixed;
+    top: 10vh;
+    left: 40vw;
+}

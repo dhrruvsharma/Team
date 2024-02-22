@@ -20,6 +20,21 @@
     border-radius: 10px;
     flex: 1;
     height: 100%;
+    overflow-y: scroll;
+}
+
+div.list::-webkit-scrollbar {
+    width: 10px;
+}
+
+div.list::-webkit-scrollbar-track {
+    background: black;
+    border-radius: 10px;
+}
+
+div.list::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 10px;
 }
 
 .list-container {
@@ -131,4 +146,9 @@
     font-size: 1.5rem;
     padding: 0.3rem;
     background-color: yellowgreen;
+}
+
+.tasks-container span:hover {
+    cursor: pointer;
+
 }

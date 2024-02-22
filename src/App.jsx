@@ -14,6 +14,7 @@ import { ActiveProvider } from './Context/ActiveContext'
 import { ListProvider } from './Context/ListContext'
 import { AddBoardProvider } from './Context/AddBoard'
 import { AddListProvider } from './Context/AddList'
+import { TaskProvider } from './Context/AddTask'
 
 function App() {
 
@@ -34,7 +35,9 @@ function App() {
                       <AddBoardProvider>
                         <ListProvider>
                           <AddListProvider>
-                            <Dashboard />
+                            <TaskProvider>
+                              <Dashboard />
+                            </TaskProvider>
                           </AddListProvider>
                         </ListProvider>
                       </AddBoardProvider>

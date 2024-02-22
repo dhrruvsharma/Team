@@ -18,6 +18,8 @@ import { useAddList } from "../../Context/AddList";
 import DeleteBoard from "../BoardPopUp/Delete";
 import DeleteList from "../List/DeleteList";
 import { useListContext } from "../../Context/ListContext";
+import AddTaskPop from "../Taks/AddTaskPop"
+import { useTaskContext } from "../../Context/AddTask"
 
 const Dashboard = () => {
     const token = Cookies.get("token")
@@ -32,6 +34,7 @@ const Dashboard = () => {
     const { setLoadSide } = useLoadContext()
     const { showListPop } = useAddList()
     const { DeleteListPop } = useListContext()
+    const { AddTask, ShowDescription } = useTaskContext()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -74,14 +77,20 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (board) {
-            const extracted = board.map((item) => (
-                (
-                    {
-                        boardID: BigInt(item.boardID.c.join("")),
-                        boardName: item.boardName
+            const extracted = board.map((item) => {
+                const padded = item.boardID.c.map((num, index) => {
+                    if (index === 0) {
+                        return num.toString().padStart(4, '0')
                     }
-                )
-            ))
+                    else {
+                        return num.toString().padStart(14, '0')
+                    }
+                })
+                return {
+                    boardID: padded.join(''),
+                    boardName: item.boardName
+                }
+            })
             setBoards(extracted)
         }
         else {
@@ -94,14 +103,19 @@ const Dashboard = () => {
             <div className="dash-navbar">
                 <DashNav />
             </div>
-            {pop && (
-                <Error />
-            )}
             <div className="dashboard-container">
                 <div className="sidebar-container">
                     <SideBar />
                 </div>
                 <div className="dash-main">
+                    {AddTask && (
+                        <div className="add-Task">
+                            <AddTaskPop />
+                        </div>
+                    )}
+                    {pop && (
+                        <Error />
+                    )}
                     {DeleteListPop && (
                         <div className="delete-list">
                             <DeleteList />

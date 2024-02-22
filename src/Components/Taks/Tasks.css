@@ -1,0 +1,107 @@
+.addTask {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: antiquewhite;
+    color: black;
+    padding: 4vw;
+    border-radius: 10px;
+}
+
+.add-main h2 {
+    margin-bottom: 1.5vw;
+}
+
+.task-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-add input {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: .3rem;
+    font-size: 1.2rem;
+    margin: 1vw 0;
+}
+
+.task-add .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 2vh;
+}
+
+.task-add button {
+    padding: .3vw;
+    background-color: greenyellow;
+    font-size: 1.2rem;
+}
+
+.task-main {
+    margin-top: 2vw;
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.task {
+    margin: 1vw 0;
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    background-color: white;
+    color: black;
+    padding: 1vw;
+    border-radius: 10px;
+}
+
+.task .buttons button {
+    background-color: black;
+    color: whitesmoke;
+    font-size: 1rem;
+    padding: .3vw;
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    padding: 3vw;
+    position: fixed;
+    background-color: beige;
+    border-radius: 20px;
+}
+
+.desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
+}
+
+.desc button {
+    background-color: black;
+    color: white;
+    margin-top: 1vw;
+}

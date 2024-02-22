@@ -3,19 +3,20 @@ import { useActiveContext } from "../../Context/ActiveContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import JSONbig from "json-bigint"
-import { useState } from "react";
 import { useLoadContext } from "../../Context/LoadContext";
 import Loader from "../Loader/Loader";
 import { useListContext } from "../../Context/ListContext";
 import "./Lists.css"
 import { useAddList } from "../../Context/AddList";
+import { useTaskContext } from "../../Context/AddTask";
+import Tasks from "../Taks/Task";
 
 const Lists = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
     const { Active, ActiveList, setActiveList } = useActiveContext()
+    const { setAddTaskPop, setTaskList } = useTaskContext()
     const token = Cookies.get('token')
     const { loadList, setLoadList } = useLoadContext()
-    const [board, setBoard] = useState([])
     const { lists, setLists, setDeleteListPop, DeleteListApi, setDeleteListApi, ExtractedLists, setExtractedLists } = useListContext()
     const { listName, setShowListPop, AddListApi, setAddList } = useAddList()
     const axiosInstance = axios.create({
@@ -91,7 +92,9 @@ const Lists = () => {
                 })
                 return {
                     listID: paddedList.join(''),
-                    listName: item.listName
+                    listName: item.listName,
+                    tasks: item.tasks,
+                    load: true
                 }
             })
             setExtractedLists(extractedLists)
@@ -129,6 +132,11 @@ const Lists = () => {
         }
     }, [DeleteListApi])
 
+    const HandleAddTask = (id) => {
+        setTaskList(id)
+        setAddTaskPop(true)
+    }
+
     return (
         <div className="lists">
             {loadList ? (
@@ -141,7 +149,8 @@ const Lists = () => {
                             </div>
                             <hr />
                             <div className="tasks-container">
-                                <h2>Tasks</h2>
+                                <h2>Tasks <span onClick={() => { HandleAddTask(item.listID) }}>+</span></h2>
+                                <Tasks task={item.tasks} load={item.load} />
                             </div>
                         </div>
                     ))}
