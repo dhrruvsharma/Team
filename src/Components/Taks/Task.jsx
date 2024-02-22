@@ -10,7 +10,7 @@ import DeleteTask from "./DeleteTask";
 
 const Tasks = ({ task, listID }) => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
-    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask, setDeleteTaskID, setDeleteList, setDeleteTaskPop, Load, setLoad,DeleteTaskPop } = useTaskContext()
+    const {  setDeleteTaskID, setDeleteList, setDeleteTaskPop, Load, setLoad,DeleteTaskPop } = useTaskContext()
     const { setLists } = useListContext()
     const [ExtractedTasks, setExtractedTasks] = useState([])
 
@@ -55,36 +55,6 @@ const Tasks = ({ task, listID }) => {
             setExtractedTasks(extractedTask)
         }
     }, [task])
-
-    const AddTask = async () => {
-        try {
-            const response = await axiosInstance.post(`${url}api/user/board/list/task/add`, {
-                "listID": TaskList.toString(),
-                "deadline": Deadline,
-                "headline": Headline,
-                "description": Description,
-                "priority": Priority
-            },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }
-            )
-            if (response.data.status === true) {
-                setLists(response.data.board.lists)
-            }
-        } catch (error) {
-            console.error(error)
-        }
-        setAddTask(false)
-    }
-
-    useEffect(() => {
-        if (AddTaskApi) {
-            AddTask()
-        }
-    }, [AddTaskApi])
 
     const ToggleDetails = (index) => {
         setExtractedTasks(prevTasks => {

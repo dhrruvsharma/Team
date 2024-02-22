@@ -19,6 +19,7 @@ const Lists = () => {
     const { loadList, setLoadList } = useLoadContext()
     const { lists, setLists, setDeleteListPop, DeleteListApi, setDeleteListApi, ExtractedLists, setExtractedLists } = useListContext()
     const { listName, setShowListPop, AddListApi, setAddList } = useAddList()
+    const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask } = useTaskContext()
     const axiosInstance = axios.create({
         transformResponse: [
             function (data) {
@@ -136,6 +137,37 @@ const Lists = () => {
         setTaskList(id)
         setAddTaskPop(true)
     }
+
+    const AddTask = async () => {
+        try {
+            const response = await axiosInstance.post(`${url}api/user/board/list/task/add`, {
+                "listID": TaskList.toString(),
+                "deadline": Deadline,
+                "headline": Headline,
+                "description": Description,
+                "priority": Priority
+            },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            )
+            if (response.data.status === true) {
+                setLists(response.data.board.lists)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+        setAddTask(false)
+    }
+
+    useEffect(() => {
+        if (AddTaskApi) {
+            AddTask()
+        }
+    }, [AddTaskApi])
+
 
     return (
         <div className="lists">
