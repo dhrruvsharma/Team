@@ -15,6 +15,7 @@ import { ListProvider } from './Context/ListContext'
 import { AddBoardProvider } from './Context/AddBoard'
 import { AddListProvider } from './Context/AddList'
 import { TaskProvider } from './Context/AddTask'
+import Join from './Components/JoinBoard/Join'
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
                   </ActiveProvider>
                 </BoardsProvider>
               } />
+              <Route path='/join' element={<Join />} />
           </Route>
         </Routes>
       </BrowserRouter>

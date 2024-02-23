@@ -1,0 +1,37 @@
+.join-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.join-main .buttons {
+    margin-top: 3vw;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.join-main button {
+    padding: .5vw;
+    background-color: black;
+    color: white;
+    font-size: 1.4rem;
+}
+
+.main-join {
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    margin: 10vw;
+    padding: 1vw;
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
