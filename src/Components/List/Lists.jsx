@@ -11,6 +11,7 @@ import { useAddList } from "../../Context/AddList";
 import { useTaskContext } from "../../Context/AddTask";
 import Tasks from "../Taks/Task";
 import { useErrorContext } from "../../Context/ErrorContext";
+import { useMemberContext } from "../../Context/MemberContext";
 
 const Lists = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
@@ -18,6 +19,7 @@ const Lists = () => {
     const { setAddTaskPop, setTaskList } = useTaskContext()
     const token = Cookies.get('token')
     const { loadList, setLoadList } = useLoadContext()
+    const { setMembers } = useMemberContext()
     const { lists, setLists, setDeleteListPop, DeleteListApi, setDeleteListApi, ExtractedLists, setExtractedLists } = useListContext()
     const { listName, setShowListPop, AddListApi, setAddList } = useAddList()
     const { setError, setPop } = useErrorContext()
@@ -51,6 +53,7 @@ const Lists = () => {
                 }
             })
             setLists(response.data.board.lists)
+            setMembers(response.data.board.members)
         } catch (error) {
             setError(error.response.data.message)
             setPop(true)

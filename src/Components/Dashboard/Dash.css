@@ -72,3 +72,8 @@
     left: 40vw;
     z-index: 100;
 }
+.add-member{
+    position: fixed;
+    top: 40vh;
+    left: 40vw;
+}

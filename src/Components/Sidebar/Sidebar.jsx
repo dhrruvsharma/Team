@@ -8,6 +8,7 @@ import Loader from "../Loader/Loader";
 import { useErrorContext } from "../../Context/ErrorContext";
 import { useActiveContext } from "../../Context/ActiveContext";
 import { useAddBoard } from "../../Context/AddBoard";
+import Members from "../Members/Members";
 
 const SideBar = () => {
     const { boards } = useBoardContext()
@@ -66,6 +67,7 @@ const SideBar = () => {
         <div className="sidebar">
             {LoadSide ? (
                 <div className="boards-container">
+                    <Members />
                     <h3>Your Boards <span className="add" onClick={HandleClick}>+</span></h3>
                     {boards.map((item) => (
                         <div className="board-container" key={item.boardID}>

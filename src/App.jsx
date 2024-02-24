@@ -16,6 +16,7 @@ import { AddBoardProvider } from './Context/AddBoard'
 import { AddListProvider } from './Context/AddList'
 import { TaskProvider } from './Context/AddTask'
 import Join from './Components/JoinBoard/Join'
+import { MemberProvider } from './Context/MemberContext'
 
 function App() {
 
@@ -38,7 +39,9 @@ function App() {
                         <ListProvider>
                           <AddListProvider>
                             <TaskProvider>
-                              <Dashboard />
+                              <MemberProvider>
+                                <Dashboard />
+                              </MemberProvider>
                             </TaskProvider>
                           </AddListProvider>
                         </ListProvider>

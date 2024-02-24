@@ -20,6 +20,8 @@ import DeleteList from "../List/DeleteList";
 import { useListContext } from "../../Context/ListContext";
 import AddTaskPop from "../Taks/AddTaskPop"
 import { useTaskContext } from "../../Context/AddTask"
+import AddMember from "../Members/AddMember";
+import { useMemberContext } from "../../Context/MemberContext";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
@@ -34,7 +36,8 @@ const Dashboard = () => {
     const { setLoadSide } = useLoadContext()
     const { showListPop } = useAddList()
     const { DeleteListPop } = useListContext()
-    const { AddTask,DeleteTaskPop } = useTaskContext()
+    const { AddTask } = useTaskContext()
+    const { NewMemberPop } = useMemberContext()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -108,6 +111,11 @@ const Dashboard = () => {
                     <SideBar />
                 </div>
                 <div className="dash-main">
+                    {NewMemberPop && (
+                        <div className="add-member">
+                            <AddMember />
+                        </div>
+                    )}
                     {AddTask && (
                         <div className="add-Task">
                             <AddTaskPop />
