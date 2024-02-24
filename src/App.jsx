@@ -27,6 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/otp' element={<Otp />} />
+          <Route path='/join/:boardID/:token' element={<Join />} />
           <Route element={<Protected />}>
             <Route path='/dashboard'
               element={
@@ -46,7 +47,6 @@ function App() {
                   </ActiveProvider>
                 </BoardsProvider>
               } />
-              <Route path='/join' element={<Join />} />
           </Route>
         </Routes>
       </BrowserRouter>

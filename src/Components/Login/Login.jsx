@@ -6,7 +6,7 @@ import { useState } from "react";
 import Loader from "../Loader/Loader";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [show, setShow] = useState(false)
@@ -16,6 +16,8 @@ const Login = () => {
     const [msg, setMsg] = useState(false)
     const [err, setErr] = useState("")
     const navigate = useNavigate()
+    const location = useLocation()
+    console.log(location.state)
 
     useEffect(() => {
         const token = Cookies.get('token')
