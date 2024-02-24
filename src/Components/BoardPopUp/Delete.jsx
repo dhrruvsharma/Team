@@ -7,6 +7,7 @@ import JSONbig from "json-bigint"
 import { useBoardContext } from "../../Context/BoardContext";
 import { useLoadContext } from "../../Context/LoadContext";
 import { useActiveContext } from "../../Context/ActiveContext";
+import { useErrorContext } from "../../Context/ErrorContext";
 
 const DeleteBoard = () => {
     const { DeleteID, setBoardDelete } = useAddBoard()
@@ -14,6 +15,7 @@ const DeleteBoard = () => {
     const { setLoadSide } = useLoadContext()
     const token = Cookies.get("token")
     const { setBoard } = useBoardContext()
+    const { setError, setPop } = useErrorContext()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -43,7 +45,8 @@ const DeleteBoard = () => {
             })
             setBoard(response.data.boards)
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoadSide(true)
     }

@@ -64,3 +64,11 @@
     top: 10vh;
     left: 40vw;
 }
+
+.error-container {
+    height: 90vh;
+    position: fixed;
+    top: 40vh;
+    left: 40vw;
+    z-index: 100;
+}

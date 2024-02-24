@@ -27,7 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/otp' element={<Otp />} />
-          <Route path='/join/:boardID/:token' element={<Join />} />
+          <Route path='/join/:boardID/:invitationToken' element={<Join />} />
           <Route element={<Protected />}>
             <Route path='/dashboard'
               element={

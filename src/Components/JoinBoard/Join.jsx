@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Join.css"
-import Nav from "../Nav/Nav"
 
 const Join = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
@@ -14,12 +13,12 @@ const Join = () => {
             navigate('/login', { state: { id: 1, path: window.location.pathname } })
         }
     }, [])
-    const {boardID,invitationToken} = useParams()
+    const { boardID, invitationToken } = useParams()
     const HandleJoin = async () => {
         try {
             const response = await axios.post(`${url}board/join/confirm`, {
                 "boardID": boardID.toString(),
-                "invitationToken":invitationToken
+                "invitationToken": invitationToken.toString()
             },
                 {
                     headers: {
@@ -36,7 +35,6 @@ const Join = () => {
     }
     return (
         <div className="join-main">
-            <Nav />
             <div className="main-join">
                 <h1>Are you sure you want to join the board ?</h1>
                 <div className="buttons">

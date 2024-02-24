@@ -10,6 +10,7 @@ import "./Lists.css"
 import { useAddList } from "../../Context/AddList";
 import { useTaskContext } from "../../Context/AddTask";
 import Tasks from "../Taks/Task";
+import { useErrorContext } from "../../Context/ErrorContext";
 
 const Lists = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
@@ -19,6 +20,7 @@ const Lists = () => {
     const { loadList, setLoadList } = useLoadContext()
     const { lists, setLists, setDeleteListPop, DeleteListApi, setDeleteListApi, ExtractedLists, setExtractedLists } = useListContext()
     const { listName, setShowListPop, AddListApi, setAddList } = useAddList()
+    const { setError, setPop } = useErrorContext()
     const { TaskList, Deadline, Headline, Description, Priority, AddTaskApi, setAddTask } = useTaskContext()
     const axiosInstance = axios.create({
         transformResponse: [
@@ -50,7 +52,8 @@ const Lists = () => {
             })
             setLists(response.data.board.lists)
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoadList(true)
     }
@@ -75,7 +78,8 @@ const Lists = () => {
             )
             setLists(response.data.board.lists)
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoadList(true)
         setAddList(false)
@@ -121,7 +125,8 @@ const Lists = () => {
             })
             setLists(response.data.board.lists)
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoadList(true)
         setDeleteListApi(false)
@@ -157,7 +162,8 @@ const Lists = () => {
                 setLists(response.data.board.lists)
             }
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setAddTask(false)
     }

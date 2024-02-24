@@ -5,12 +5,14 @@ import Cookies from "js-cookie";
 import { useListContext } from "../../Context/ListContext";
 import axios from "axios";
 import "./Tasks.css"
+import { useErrorContext } from "../../Context/ErrorContext";
 
 const DeleteTask = () => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
     const { DeleteTaskID, DeleteTaskList, setDeleteTaskPop, setLoad } = useTaskContext()
     const token = Cookies.get("token")
     const { setLists } = useListContext()
+    const { setError, setPop } = useErrorContext()
 
     const axiosInstance = axios.create({
         transformResponse: [
@@ -39,7 +41,8 @@ const DeleteTask = () => {
             })
             setLists(response.data.board.lists)
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoad(true)
     }

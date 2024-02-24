@@ -7,12 +7,14 @@ import "./Tasks.css"
 import { useListContext } from "../../Context/ListContext";
 import Loader from "../Loader/Loader"
 import DeleteTask from "./DeleteTask";
+import { useErrorContext } from "../../Context/ErrorContext";
 
 const Tasks = ({ task, listID }) => {
     const url = import.meta.env.VITE_REACT_APP_SIGNUP
     const {  setDeleteTaskID, setDeleteList, setDeleteTaskPop, Load, setLoad,DeleteTaskPop } = useTaskContext()
     const { setLists } = useListContext()
     const [ExtractedTasks, setExtractedTasks] = useState([])
+    const { setError,setPop } = useErrorContext()
 
     const token = Cookies.get("token")
     const axiosInstance = axios.create({
@@ -81,7 +83,8 @@ const Tasks = ({ task, listID }) => {
                 setLists(response.data.board.lists)
             }
         } catch (error) {
-            console.error(error)
+            setError(error.response.data.message)
+            setPop(true)
         }
         setLoad(true)
     }

@@ -61,7 +61,7 @@ const Login = () => {
                     navigate(`/${redirectPath}`)
                 }
                 else {
-                    navigate('dashboard')
+                    navigate('/dashboard')
                 }
             }
         } catch (error) {

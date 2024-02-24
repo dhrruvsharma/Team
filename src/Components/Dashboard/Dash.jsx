@@ -20,7 +20,6 @@ import DeleteList from "../List/DeleteList";
 import { useListContext } from "../../Context/ListContext";
 import AddTaskPop from "../Taks/AddTaskPop"
 import { useTaskContext } from "../../Context/AddTask"
-import DeleteTask from "../Taks/DeleteTask";
 
 const Dashboard = () => {
     const token = Cookies.get("token")
@@ -115,7 +114,9 @@ const Dashboard = () => {
                         </div>
                     )}
                     {pop && (
-                        <Error />
+                        <div className="error-container">
+                            <Error />
+                        </div>
                     )}
                     {DeleteListPop && (
                         <div className="delete-list">
