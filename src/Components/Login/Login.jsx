@@ -17,7 +17,7 @@ const Login = () => {
     const [err, setErr] = useState("")
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location.state)
+    const redirectPath = location?.state?.path
 
     useEffect(() => {
         const token = Cookies.get('token')
@@ -57,7 +57,12 @@ const Login = () => {
                     secure: true,
                     httpOnly: false
                 })
-                navigate('/dashboard')
+                if (redirectPath) {
+                    navigate(`/${redirectPath}`)
+                }
+                else {
+                    navigate('dashboard')
+                }
             }
         } catch (error) {
             console.error(error)
